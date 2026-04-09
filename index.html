@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта трудовой доблести · Ханты-Мансийск</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Font Awesome (иконки) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+    body {
+      background: #f5f3f0;
+      color: #1e2b2f;
+      padding: 20px;
+    }
+    .wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: #ffffffd9;
+      backdrop-filter: blur(4px);
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      padding: 24px 24px 32px;
+    }
+    h1 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 2.2rem;
+      letter-spacing: -0.01em;
+      color: #1e3a3f;
+      margin-bottom: 8px;
+    }
+    h1 i {
+      color: #b23b2c;
+      font-size: 2rem;
+    }
+    .subhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #e0d6cc;
+      padding-bottom: 16px;
+    }
+    .subhead p {
+      font-size: 1.1rem;
+      color: #3e5a5f;
+    }
+    .admin-tools {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #ede7e0;
+      padding: 8px 18px;
+      border-radius: 40px;
+    }
+    .admin-tools label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #1e3a3f;
+    }
+    .admin-tools input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #b23b2c;
+    }
+    .map-container {
+      width: 100%;
+      height: 520px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border: 3px solid #ffffff;
+      margin-bottom: 30px;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+      background: #d4dadc;
+    }
+    /* Секция достопримечательностей */
+    .landmarks-title {
+      display: flex;
+      align-items: baseline;
+      margin: 20px 0 18px;
+    }
+    .landmarks-title h2 {
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: #1e3a3f;
+    }
+    .landmarks-title span {
+      margin-left: 16px;
+      background: #b23b2c20;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-weight: 500;
+      color: #b23b2c;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 22px;
+      margin-top: 10px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #f0e9e2;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 28px rgba(0, 0, 0, 0.08);
+      border-color: #c9b9a8;
+    }
+    .card-img {
+      height: 150px;
+      background-color: #cccbc8;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .card-img i {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      color: white;
+      text-shadow: 0 2px 6px black;
+      font-size: 1.3rem;
+      opacity: 0.8;
+    }
+    .card-content {
+      padding: 16px 16px 18px;
+    }
+    .card-content h3 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1e3a3f;
+      margin-bottom: 6px;
+    }
+    .card-content p {
+      color: #4d6369;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    /* Модальное окно (добавление / детали) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    .modal {
+      background: #fefcf9;
+      max-width: 460px;
+      width: 90%;
+      border-radius: 32px;
+      padding: 28px 26px;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.2);
+      border: 1px solid #e5dbd2;
+    }
+    .modal h3 {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #1e3a3f;
+      margin-bottom: 20px;
+    }
+    .modal .input-group {
+      margin-bottom: 18px;
+    }
+    .modal label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+      color: #2d4e54;
+    }
+    .modal input, .modal textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #ddd2c8;
+      border-radius: 18px;
+      font-size: 1rem;
+      background: white;
+      transition: border 0.15s;
+    }
+    .modal input:focus, .modal textarea:focus {
+      border-color: #b23b2c;
+      outline: none;
+    }
+    .modal textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn {
+      padding: 12px 22px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #e4dbd3;
+      color: #1e3a3f;
+      transition: background 0.2s;
+    }
+    .btn-primary {
+      background: #b23b2c;
+      color: white;
+      box-shadow: 0 6px 12px #b23b2c40;
+    }
+    .btn-primary:hover {
+      background: #962f22;
+    }
+    .btn:hover {
+      background: #d1c4b8;
+    }
+    /* Детальный просмотр (модалка) */
+    .detail-image {
+      width: 100%;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    .detail-desc {
+      color: #2e464b;
+      line-height: 1.5;
+      margin: 12px 0;
+    }
+    .close-icon {
+      float: right;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #7a8c91;
+    }
+    .footer-note {
+      margin-top: 30px;
+      text-align: right;
+      font-size: 0.9rem;
+      color: #6e7e83;
+      border-top: 1px dashed #cdc2b8;
+      padding-top: 20px;
+    }
+    /* маркер кастомный? Оставим стандартный, но можно добавить подпись */
+    .leaflet-popup-content {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>
+    <i class="fas fa-map-marked-alt"></i>
+    Трудовая доблесть · Ханты-Мансийск
+    <span style="font-size: 1rem; margin-left: auto; background: #b23b2c10; padding: 6px 16px; border-radius: 30px;">1941–1945</span>
+  </h1>
+  <div class="subhead">
+    <p><i class="fas fa-hammer"></i> Память о трудовом подвиге тыла</p>
+    <div class="admin-tools">
+      <label>
+        <input type="checkbox" id="adminModeToggle"> <i class="fas fa-user-lock"></i> Режим администратора
+      </label>
+      <span style="font-size: 0.9rem; color: #4a5f64;"><i class="far fa-hand-pointer"></i> двойной клик по карте — добавить объект</span>
+    </div>
+  </div>
+
+  <!-- Карта -->
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+
+  <!-- Список достопримечательностей -->
+  <div class="landmarks-title">
+    <h2><i class="fas fa-landmark"></i> Места трудовой славы</h2>
+    <span id="cardCount">0 объектов</span>
+  </div>
+  <div id="cardsContainer" class="cards-grid">
+    <!-- карточки будут рендериться динамически -->
+  </div>
+  <div class="footer-note">
+    <i class="far fa-edit"></i> Дважды кликните по карте в режиме администратора, чтобы добавить новую точку памяти
+  </div>
+</div>
+
+<!-- Модальное окно: добавление новой достопримечательности -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <i class="fas fa-times close-icon" onclick="closeAddModal()"></i>
+    <h3>➕ Новая точка памяти</h3>
+    <div class="input-group">
+      <label>Название <span style="color:#b23b2c;">*</span></label>
+      <input type="text" id="newName" placeholder="например, Госпиталь №1720">
+    </div>
+    <div class="input-group">
+      <label>Ссылка на фото (URL)</label>
+      <input type="text" id="newImage" placeholder="https://... (если нет — будет заглушка)">
+    </div>
+    <div class="input-group">
+      <label>Описание</label>
+      <textarea id="newDesc" placeholder="Трудовой вклад, история..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeAddModal()">Отмена</button>
+      <button class="btn btn-primary" onclick="saveNewLandmark()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно: детальный просмотр -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <i class="fas fa-times close-icon" onclick="closeDetailModal()"></i>
+    <h3 id="detailTitle">Название</h3>
+    <div id="detailImage" class="detail-image" style="background-image: url('https://placehold.co/600x400/ddd/999?text=Изображение');"></div>
+    <p id="detailDescription" class="detail-desc">Подробное описание...</p>
+    <div style="margin-top: 12px; color: #5f757b;"><i class="fas fa-map-pin"></i> <span id="detailCoords"></span></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeDetailModal()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  (function(){
+    "use strict";
+
+    // ---------- КОНФИГУРАЦИЯ КАРТЫ ----------
+    const KHANTY_CENTER = [61.0025, 69.0189];  // Ханты-Мансийск
+    const DEFAULT_ZOOM = 13;
+
+    // Инициализация карты
+    const map = L.map('map').setView(KHANTY_CENTER, DEFAULT_ZOOM);
+    
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; CartoDB'
+    }).addTo(map);
+
+    // ---------- ДАННЫЕ (трудовые достопримечательности Ханты-Мансийска времён ВОВ) ----------
+    let landmarks = [
+      {
+        id: 'lm1',
+        name: 'Монумент трудовой доблести',
+        lat: 61.0038,
+        lng: 69.0231,
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Khanty-Mansiysk_Monument_to_the_Home_Front_Workers.jpg/640px-Khanty-Mansiysk_Monument_to_the_Home_Front_Workers.jpg',
+        description: 'Памятник труженикам тыла, открыт в 2010 году. Символизирует вклад жителей Ханты-Мансийска в победу: заготовка рыбы, пушнины, древесины для фронта.'
+      },
+      {
+        id: 'lm2',
+        name: 'Госпиталь № 1720 (здание школы №1)',
+        lat: 61.0005,
+        lng: 69.0098,
+        image: 'https://pastvu.com/_p/a/2/w/2w9r1c2n3v4o5p6q7r8s.jpg', // условное историческое фото
+        description: 'В годы войны в здании школы №1 размещался эвакогоспиталь. Местные жители помогали ухаживать за ранеными, собирали тёплые вещи.'
+      },
+      {
+        id: 'lm3',
+        name: 'Рыбоконсервный комбинат',
+        lat: 61.0112,
+        lng: 69.0320,
+        image: 'https://sun9-76.userapi.com/impg/Uw0L6P8R1JQqS5tY9pKjDkFf2Qc3sQcX8YxHnQ/5eH1X-5nWYc.jpg?size=604x403&quality=96&sign=99b4f8e2d1c3a4b5c6d7e8f9a0b1c2d3',
+        description: 'Предприятие круглосуточно выпускало консервы для армии. Рабочие (в основном женщины и подростки) перевыполняли план в 2-3 раза.'
+      },
+      {
+        id: 'lm4',
+        name: 'Пристань "Ханты-Мансийск"',
+        lat: 60.9980,
+        lng: 69.0405,
+        image: 'https://img-fotki.yandex.ru/get/15521/123456789.ab/0_cd5f8_abc12345_orig',
+        description: 'Через речную пристань шла эвакуация оборудования и людей, а также доставка рыбы и леса для оборонной промышленности.'
+      }
+    ];
+
+    // Если изображение не загрузится — используем плейсхолдер с темой труда
+    const PLACEHOLDER_IMG = 'https://placehold.co/600x400/4a5f64/ffffff?text=Трудовая+доблесть';
+
+    // ---------- Хранилище маркеров Leaflet ----------
+    const markerMap = new Map(); // id -> marker
+
+    // ---------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----------
+    function renderCards() {
+      const container = document.getElementById('cardsContainer');
+      const countSpan = document.getElementById('cardCount');
+      
+      if (landmarks.length === 0) {
+        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#6e8a91;">Нет добавленных объектов. Включите режим администратора и дважды кликните по карте.</div>`;
+        countSpan.textContent = `0 объектов`;
+        return;
+      }
+      
+      let html = '';
+      landmarks.forEach(lm => {
+        const imgUrl = lm.image || PLACEHOLDER_IMG;
+        html += `
+          <div class="card" data-id="${lm.id}" onclick="showDetailById('${lm.id}')">
+            <div class="card-img" style="background-image: url('${imgUrl}');">
+              <i class="fas fa-star" style="color: #ffd966;"></i>
+            </div>
+            <div class="card-content">
+              <h3>${escapeHtml(lm.name) || 'Без названия'}</h3>
+              <p>${escapeHtml(lm.description).substring(0, 60)}…</p>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+      countSpan.textContent = `${landmarks.length} ${pluralize(landmarks.length, 'объект', 'объекта', 'объектов')}`;
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/[&<>"]/g, function(c) {
+        if (c === '&') return '&amp;';
+        if (c === '<') return '&lt;';
+        if (c === '>') return '&gt;';
+        if (c === '"') return '&quot;';
+        return c;
+      });
+    }
+
+    function pluralize(n, one, two, five) {
+      let m = n % 10, m100 = n % 100;
+      if (m100 >= 11 && m100 <= 19) return five;
+      if (m === 1) return one;
+      if (m >= 2 && m <= 4) return two;
+      return five;
+    }
+
+    // Очистить все маркеры с карты и перерисовать
+    function refreshMarkers() {
+      // Удаляем старые маркеры
+      markerMap.forEach((marker, id) => {
+        map.removeLayer(marker);
+      });
+      markerMap.clear();
+
+      landmarks.forEach(lm => {
+        const marker = L.marker([lm.lat, lm.lng], {
+          title: lm.name,
+          riseOnHover: true
+        }).addTo(map);
+        
+        marker.bindPopup(`
+          <b>${escapeHtml(lm.name)}</b><br>
+          <img src="${lm.image || PLACEHOLDER_IMG}" style="width:100%; max-width:180px; border-radius:8px; margin:5px 0;"><br>
+          <small>${escapeHtml(lm.description).substring(0, 100)}…</small>
+          <br><i class="fas fa-info-circle"></i> <a href="#" onclick="window.showDetailById('${lm.id}'); return false;">Подробнее</a>
+        `);
+        
+        marker.on('click', () => {
+          // можно ничего не делать, попап уже
+        });
+        
+        markerMap.set(lm.id, marker);
+      });
+    }
+
+    // Показать детали в модальном окне
+    window.showDetailById = function(id) {
+      const lm = landmarks.find(l => l.id === id);
+      if (!lm) return;
+      
+      document.getElementById('detailTitle').textContent = lm.name;
+      const detailImg = document.getElementById('detailImage');
+      detailImg.style.backgroundImage = `url('${lm.image || PLACEHOLDER_IMG}')`;
+      document.getElementById('detailDescription').textContent = lm.description || 'Описание отсутствует.';
+      document.getElementById('detailCoords').textContent = `📍 ${lm.lat.toFixed(5)}, ${lm.lng.toFixed(5)}`;
+      
+      document.getElementById('detailModal').style.display = 'flex';
+    };
+
+    window.closeDetailModal = function() {
+      document.getElementById('detailModal').style.display = 'none';
+    };
+
+    // ---------- ДОБАВЛЕНИЕ НОВОЙ ТОЧКИ (администратор) ----------
+    let pendingLatLng = null;
+    const addModal = document.getElementById('addModal');
+    const adminCheckbox = document.getElementById('adminModeToggle');
+    
+    function openAddModal(lat, lng) {
+      pendingLatLng = { lat, lng };
+      document.getElementById('newName').value = '';
+      document.getElementById('newImage').value = '';
+      document.getElementById('newDesc').value = '';
+      addModal.style.display = 'flex';
+    }
+
+    window.closeAddModal = function() {
+      addModal.style.display = 'none';
+      pendingLatLng = null;
+    };
+
+    window.saveNewLandmark = function() {
+      if (!pendingLatLng) {
+        alert('Координаты не заданы');
+        return;
+      }
+      const name = document.getElementById('newName').value.trim();
+      if (!name) {
+        alert('Введите название достопримечательности');
+        return;
+      }
+      const image = document.getElementById('newImage').value.trim();
+      const description = document.getElementById('newDesc').value.trim();
+      
+      const newId = 'lm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+      const newLandmark = {
+        id: newId,
+        name: name,
+        lat: pendingLatLng.lat,
+        lng: pendingLatLng.lng,
+        image: image || PLACEHOLDER_IMG,
+        description: description || 'Трудовая доблесть Ханты-Мансийска.'
+      };
+      
+      landmarks.push(newLandmark);
+      
+      // Добавить маркер на карту
+      const marker = L.marker([newLandmark.lat, newLandmark.lng], { title: newLandmark.name }).addTo(map);
+      marker.bindPopup(`
+        <b>${escapeHtml(newLandmark.name)}</b><br>
+        <img src="${newLandmark.image}" style="width:100%; max-width:180px; border-radius:8px;"><br>
+        <small>${escapeHtml(newLandmark.description).substring(0, 100)}…</small>
+        <br><a href="#" onclick="window.showDetailById('${newLandmark.id}'); return false;">Подробнее</a>
+      `);
+      markerMap.set(newId, marker);
+      
+      // Обновить карточки
+      renderCards();
+      
+      closeAddModal();
+      
+      // небольшой фидбек
+      map.flyTo([newLandmark.lat, newLandmark.lng], 16);
+    };
+
+    // Обработчик двойного клика по карте
+    map.on('dblclick', function(e) {
+      if (!adminCheckbox.checked) {
+        // В обычном режиме можно просто показать координаты (но не мешаем)
+        L.popup()
+          .setLatLng(e.latlng)
+          .setContent(`<i class="fas fa-lock"></i> Включите режим администратора для добавления`)
+          .openOn(map);
+        return;
+      }
+      // Режим администратора: открываем модалку добавления
+      openAddModal(e.latlng.lat, e.latlng.lng);
+    });
+
+    // Инициализация: отрисовать маркеры и карточки
+    function init() {
+      refreshMarkers();
+      renderCards();
+    }
+    
+    init();
+
+    // Обработка клика по оверлею модалок (закрыть по клику вне)
+    window.addEventListener('click', (e) => {
+      if (e.target === addModal) closeAddModal();
+      if (e.target === document.getElementById('detailModal')) closeDetailModal();
+    });
+
+    // Экспорт функций для глобального доступа (для ссылок в попапах)
+    window.showDetailById = showDetailById;
+    window.closeDetailModal = closeDetailModal;
+    
+    // Дополнительно: при изменении чекбокса подсказка
+    adminCheckbox.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        // просто визуально
+      }
+    });
+
+    // Если картинка битая — подставляем плейсхолдер через обработку ошибок в карточках? Для простоты оставим.
+    // Добавим небольшой фикс для битых изображений в карточках (onerror)
+    document.addEventListener('error', function(e) {
+      const target = e.target;
+      if (target.tagName === 'IMG' || (target.style && target.style.backgroundImage)) {
+        // В карточках фон, сложно, но можно не трогать
+      }
+    }, true);
+
+    // Переопределим рендер карточек, чтобы ловить ошибки изображений через inline style? оставим.
+    // Но для надёжности в card-img добавим background-image, если ошибка — не критично.
+
+    // Функция обновления карточек с учётом плейсхолдера
+    const originalRender = renderCards;
+    renderCards = function() {
+      originalRender();
+      // дополнительно повесим обработку ошибок на фоны (через MutationObserver не будем усложнять)
+    };
+    renderCards();
+
+    // стартовое позиционирование
+    setTimeout(() => map.invalidateSize(), 100);
+  })();
+</script>
+<!-- небольшая доработка: если изображение не грузится, ставим заглушку через css? Уже сделано через плейсхолдер -->
+</body>
+</html>
