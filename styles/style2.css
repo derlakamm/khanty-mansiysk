@@ -8,25 +8,36 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background: rgb(232, 227, 227);
       scroll-behavior: smooth;
     }
 
+    .body {
+      background: repeating-linear-gradient(90deg, #d3d3d3 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(0deg, #d3d3d3 0 2px, transparent 2px 4px),
+    linear-gradient(to bottom, #e7e7e7 0.01%, #1a1a1a 100%);
+    }
+
+
     .img__logo {
         height: 110px;
-        width: 130px;
+        width: 90px;
     }
 
     .header {
-      gap: 160px;
-      background: #1e3a5f;
+      gap: 30px;
+      background-image: url(../images/S3WpFdRyYjzMiRC1Dq_79VFP3Wl1L7yqn6XxwGBM9b7SK6mrw_rnhhgDGJHi1zziJp2qe7-3V9zJSao458Jjv1_y.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
       color: white;
-      padding-block: 9px;
+      padding-block: 40px;
+      padding-inline-start: 230px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       flex-wrap: wrap;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
     }
     .site-title {
       font-size: 32px;
@@ -34,17 +45,42 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-direction: column;
     }
-    .site-title i { color: #ffc107; font-size: 1.8rem; }
+
     .nav-menu {
+      position: absolute;
+      color: #343a40;
       display: flex;
-      gap: 1.8rem;
-      list-style: none;
+      flex-direction: row;
+      padding-block-start: 5px;
+      top: 152px;
+      background-color: rgba(255,255,255,0.7);
+      justify-content: space-between;
+      padding-inline: 300px;
+      list-style-type: none;
+      left: 0;
+      right: 0;
     }
+
+
+    .site-description {
+      display: block;
+      font-size: 16px;
+      color: black;
+      align-self: flex-start;
+      background-color: #ffc107;
+      padding-inline: 10px;
+      border-radius: 10px;
+    }
+    
+    .site-title i { color: #ffc107; font-size: 1.8rem; }
+    
     .nav-menu li {
       cursor: pointer;
+      text-transform: uppercase;
       font-weight: 700;
-      font-size: 22px;
+      font-size: 18px;
       padding: 0.3rem 0;
       border-bottom: 2px solid transparent;
       transition: 0.2s;
@@ -52,16 +88,17 @@
     .nav-menu li:hover { border-bottom-color: #ffc107; color: #ffc107; }
     .map-container {
       padding: 20px;
-      height: 85vh;
+      height: 80vh;
+      margin-block-end: 50px;
     }
     #map {
       width: 100%;
       max-width: 1300px;
       margin: 0 auto;
-      height: 80vh;
+      height: 73vh;
       border-radius: 24px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      border: 3px solid white;
+      border: 3px solid #000;
       z-index: 1;
     }
     .map-hint {
@@ -74,6 +111,29 @@
       border-radius: 40px;
       display: inline-block;
     }
+
+    .sights-first {
+      background-color: #e6e1e1;
+      border-radius: 20px;
+    }
+
+    .sights-second {
+      background-color: #e6e1e1;
+      border-radius: 20px;
+    }
+
+    .sights-third {
+      background-color: #e6e1e1;
+      border-radius: 20px;
+    }
+
+    .sections {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+
     .sights-section, .gallery-section {
       padding: 20px;
       max-width: 1300px;
@@ -111,6 +171,10 @@
       object-fit: cover;
       object-position: center;
       background: #cbd5e1;
+    }
+
+    .sight-card-hero {
+      height: 500px;
     }
 
     .card-img {
