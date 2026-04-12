@@ -37,7 +37,6 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      position: relative;
     }
     .site-title {
       font-size: 32px;
@@ -49,18 +48,15 @@
     }
 
     .nav-menu {
-      position: absolute;
       color: #343a40;
       display: flex;
       flex-direction: row;
       padding-block-start: 5px;
-      top: 152px;
-      background-color: rgba(255,255,255,0.7);
+      background-color: rgba(255,255,255,0.3);
       justify-content: space-between;
-      padding-inline: 300px;
+      padding-inline: 100px;
       list-style-type: none;
-      left: 0;
-      right: 0;
+      
     }
 
 
@@ -70,8 +66,10 @@
       color: black;
       align-self: flex-start;
       background-color: #ffc107;
-      padding-inline: 10px;
+      padding-inline: 15px;
+      padding-block: 5px;
       border-radius: 10px;
+      font-weight: 700;
     }
     
     .site-title i { color: #ffc107; font-size: 1.8rem; }
@@ -91,11 +89,56 @@
       height: 80vh;
       margin-block-end: 50px;
     }
+
+    .nav-link-text {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-second {
+      justify-content: center;
+      align-items: center;
+      margin-block-end: 30px;
+    }
+
+    .nav-back {
+      width: 20px;
+      height: 20px;
+    }
+
+    .section-us {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-block-start: 0px;
+      gap: 50px;
+      flex-direction: column;
+    }
+
+
+    .content-text {
+      font-family: 'IBM Plex mono';
+      font-size: 20px;
+    }
+
+    .photo-us {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .container-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     #map {
       width: 100%;
       max-width: 1300px;
       margin: 0 auto;
-      height: 73vh;
+      height: 69vh;
       border-radius: 24px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       border: 3px solid #000;
@@ -167,7 +210,7 @@
 
     .sight-card-img {
       width: 100%;
-      height: 230px;
+      height: 350px;
       object-fit: cover;
       object-position: center;
       background: #cbd5e1;
@@ -181,6 +224,22 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .info-us {
+      text-transform: uppercase;
+      font-family: 'IBM Plex mono';
+      font-weight: 400;
+      color: #343a40;
+      text-align: center;
+      font-size: 40px;
+    }
+
+    .info-us-container {
+      background-color: white;
+      width: 500px;
+      border-radius: 15px;
+      opacity: 0.8;
     }
 
     .sight-card-content {
@@ -268,7 +327,7 @@
       box-shadow: 0 25px 40px rgba(0,0,0,0.3);
       position: relative;
     }
-    .modal h3 { margin-bottom: 1rem; color: #1e3a5f; border-left: 6px solid #ffc107; padding-left: 15px; }
+    .modal h3 { margin-bottom: 1rem; color: #1e3a5f; padding-left: 0px; }
     .close-btn {
       position: absolute;
       top: 15px; right: 20px;
@@ -305,4 +364,60 @@
       .section-header h2 { font-size: 1.5rem; }
       #map { height: 350px; }
       #scrollToTopBtn { padding: 10px 16px; font-size: 14px; bottom: 20px; right: 20px; }
+    }
+
+    .name {
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .group {
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+
+
+    @media (width <= 1500px) {
+      .nav-menu {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        margin: 0;
+        padding-inline: 100px;
+      }
+    }
+
+    @media (width <= 1100px) {
+      .nav-menu {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        padding: 0;
+        padding-inline: 200px;
+      } 
+    }
+
+    @media (width <= 920px) {
+      .nav-menu {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .nav-text {
+        display: grid;
+        place-items: center;
+        height: 50px;
+      }
+    }
+
+    @media (width <= 600px) {
+      .map-container {
+        margin-block-end: 0;
+        padding-block-end: 0;
+      }
     }
