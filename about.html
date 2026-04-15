@@ -1,60 +1,121 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <link rel="stylesheet" href="./styles/style2.css">
-    <title>Ханты-Мансийск. Город трудовой доблести</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ханты-Мансийск — информация о нас</title>
+  <link rel="stylesheet" href="./styles/main.css" />
 </head>
 <body class="body">
-    <div class="headerr">
-        <header class="header">
-            <img src="./images/Coat_of_Arms_of_Khanty-Mansiysk.svg.png" class="img__logo">
-            <div class="site-title">
-                <p class="site-text">Ханты-Мансийск</p>
-                <p class="site-description">Город трудовой доблести</p>
-            </div>
-            <!-- Обновлённое навигационное меню в заданном порядке -->
-        </header>
+  <header class="header">
+    <img src="./images/Coat_of_Arms_of_Khanty-Mansiysk.svg.png" class="img__logo" alt="Герб Ханты-Мансийска" />
+    <div class="site-title">
+      <p class="site-text">Ханты-Мансийск</p>
+      <p class="site-description">Город трудовой доблести</p>
     </div>
+  </header>
+
+  <nav class="nav-menu-container">
     <ul class="nav-menu nav-second">
-        <li class="nav-text"><a href="./index.html" class="nav-link-text">вернуться назад</a></li>
+      <li class="nav-text">
+        <a href="./index.html" class="nav-link-text">Вернуться назад</a>
+      </li>
     </ul>
+  </nav>
 
+  <main class="sections">
+    <section class="content-section section-us">
+      <div class="info-us-container">
+        <h1 class="info-us">Команда проекта</h1>
+      </div>
 
-    <section class="section-us">
-        <div class="info-us-container">
-            <h1 class="info-us">Команда проекта</h1>
-        </div>
-        <div class="sights-grid">
-            <div class="sight-card">
-                <div class="sight-card-img sight-card-hero">
-                    <img class="card-img" src="./images/mYdDG6lePc_m9o9h8j2b_Pms1Yx0AJGhiZdZlodp9g5WZx9uwgLo8t2TJqXLRZqLva7CqJU8SGXwH-ULmrkEWeJx.jpg">
-                </div>
-                <div class="sight-card-content">
-                    <div class="sight-card-title name">Пономарев Виталий Витальевич</div>
-                    <div class="sight-card-desc group">ЮР41Б</div>
-                </div>
-            </div>
-            <div class="sight-card">
-                <div class="sight-card-img sight-card-hero">
-                    <img class="card-img" src="./images/YvI7hUrkHvyM-oAt3dxKqDCLRXkDl7e9-x0Wsy05k1dqK3jjnqFYRtz1KecF0nyYe8ODJZFZ9R6H7luXwKM4lJ0N.jpg">
-                </div>
-                <div class="sight-card-content">
-                    <div class="sight-card-title name">Ткаченко Лука Андреевич</div>
-                    <div class="sight-card-desc group">ЮР41Б</div>
-                </div>
-            </div>
-            <div class="sight-card">
-                <div class="sight-card-img sight-card-hero">
-                    <img class="card-img" src="./images/JNeQJ37GAL1_4hI4B7g6BmfNDq2DU0f9vS6B28LbaphkTxHUHJpRysabDls2E4bi9SI2v9Cy3hbIndpDWsqOKox.png">
-                </div>
-                <div class="sight-card-content">
-                    <div class="sight-card-title name">Мурашкин Егор Юрьевич</div>
-                    <div class="sight-card-desc group">Frontend Developer, Moscow King</div>
-                </div>
-            </div>
-        </div>
+      <div class="sights-grid team-grid">
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/mYdDG6lePc_m9o9h8j2b_Pms1Yx0AJGhiZdZlodp9g5WZx9uwgLo8t2TJqXLRZqLva7CqJU8SGXwH-ULmrkEWeJx.jpg" alt="Пономарев Виталий Витальевич" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Пономарев Виталий Витальевич</h3>
+            <p class="sight-card-desc group">ЮР41Б</p>
+          </div>
+        </article>
+
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/YvI7hUrkHvyM-oAt3dxKqDCLRXkDl7e9-x0Wsy05k1dqK3jjnqFYRtz1KecF0nyYe8ODJZFZ9R6H7luXwKM4lJ0N.jpg" alt="Ткаченко Лука Андреевич" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Ткаченко Лука Андреевич</h3>
+            <p class="sight-card-desc group">ЮР41Б</p>
+          </div>
+        </article>
+
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/b5oLnGeJdM8TEDtkf7hLtBkJBoiY_2P06efG7zB23NJeG4KPGlFJz-ratrJPlj9zvxqBPZaG4NxcNy-xnVn3FeNR.jpg" alt="Кузнецов Иван Андреевич" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Кузнецов Иван Андреевич</h3>
+            <p class="sight-card-desc group">НД41Б</p>
+          </div>
+        </article>
+
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/Дарья Николаевна.jpg" alt="Мажула Дарья Николаевна" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Мажула Дарья Николаевна</h3>
+            <p class="sight-card-desc group">ФИЛ41Б</p>
+          </div>
+        </article>
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/Владислав Александрович.jpg" alt="Гонтарев Владислав Александрович" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Гонтарев Владислав Александрович</h3>
+            <p class="sight-card-desc group">НД41Б</p>
+          </div>
+        </article>
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/Наталия Дмитриевна.jpg" alt="Татаринчик Наталия Дмитриевна" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Татаринчик Наталия Дмитриевна</h3>
+            <p class="sight-card-desc group">ЮР42Б</p>
+          </div>
+        </article>
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/Шевелева Евгения.jpg" alt="Шевелева Евгения" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Шевелева Евгения</h3>
+            <p class="sight-card-desc group">ХИМ41Б</p>
+          </div>
+        </article>
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/Баландин Михаил.jpg" alt="Баландин Михаил Андреевич" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Баландин Михаил Андреевич</h3>
+            <p class="sight-card-desc group">НД41Б</p>
+          </div>
+        </article>
+        <article class="sight-card">
+          <div class="sight-card-img sight-card-hero">
+            <img class="card-img" src="./images/Лев Юрьевич.jpg" alt="Калганов Лев Юрьевич" />
+          </div>
+          <div class="sight-card-content">
+            <h3 class="sight-card-title name">Калганов Лев Юрьевич</h3>
+            <p class="sight-card-desc group">НД41Б</p>
+          </div>
+        </article>
+      </div>
     </section>
+  </main>
 </body>
 </html>
