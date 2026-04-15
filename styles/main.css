@@ -672,6 +672,16 @@ body {
     background: #f4fbff;
   }
 
+  .nav-about {
+    display: flex;
+    padding: 0;
+  }
+
+  .nav-about-text {
+    background: transparent;
+    color: var(--accent-dark);
+  }
+  
   .section-header h2 {
     font-size: 1.6rem;
   }
