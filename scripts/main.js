@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "./images/GbwUhDtLZhyzfKHXhVNNOs_1jTThhLU8Z5eMWPgH6yBGUUyykOlQPtN3Jit64HUAJW-Aibqh3HH-LQGSM-91qYw3.jpg"
     },
     "3": {
-      title: "Танк-памятник",
+      title: "Танк T-34",
       date: "",
       desc: "В парке Победы в мае 2010 года был установлен танк-памятник как символ самой кровопролитной войны в истории России. Этот танк – «родом» с псковских полей сражений. Он был обнаружен в июле 2006 года на дне Селивановского озера в районе деревни Зелёнкино Великолукского района Псковской области и поднят с 12-ти метровой глубины Сургутским поисковым отрядом «Звезда». В Ханты-Мансийск этот военный артефакт прибыл в 2009 году. В преддверии 65-летия Великой Победы в парке Победы состоялось торжественное открытие танка-памятника Т-34. На мемориальной плите, расположенной на постаменте, сказано: «Легендарный танк Т-34-76 времен великой Отечественной войны участвовал в обороне города Великие Луки».",
       image: "./images/Q3gzPX5WpNQ3XRj17xK7uLy1xlOyoUhxpAIEPMjPUchn_nXOTkGCDVwHOTM7QYjfZHfEoEuUv7YbpIA0FK7NLhwn.jpg"
@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "./images/eOpDSeTths4ztMuqS2pQZMjqkLT1dmHdHcqjvjcbEPzpbEO_uA1joZ9l38YA-q3NZ_n5-D1B60qPiWbk1YLwd5qk.jpg"
     },
     "5": {
-      title: "Памятник труженикам тыла",
+      title: "Памятный знак «Труженикам тыла»",
       date: "",
       desc: "Монумент в честь жителей города, ковавших победу в тылу. Открыт в 2020 году в сквере Трудовой славы. Представляет собой скульптурную композицию: женщина с ребёнком и пожилой мужчина у станка. Символизирует самоотверженный труд женщин, стариков и подростков, заменивших ушедших на фронт мужчин.",
-      image: "./images/QR4Hj3ZsQaLEpPKuD8hRUgvDke1fpAugyRHHh9NC-9Ez6qPvidyfyy6QfEVCJu-85XHq0ovro1HbJcJuVy26em1v.jpg"
+      image: "./images/2hLZ1YJ9G7gI0m34B6eB0crQ1m2cF5hNKjNapKT3ttkXV9xaza4u6344tNOBruT2814jB78U4MhikvMKTDPyUPS3.jpg"
     },
     "6": {
       title: "Мемориальный комплекс «Город трудовой доблести»",
