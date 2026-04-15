@@ -421,11 +421,7 @@ if (burgerBtn && mainNav) {
         return `
           <div class="marker-gallery" data-marker-id="${mid}" data-current-idx="0">
             <img src="${escapeHtml(imgs[0])}" class="gallery-main-img" alt="${escapeHtml(data.name)}">
-            <div class="gallery-controls">
-              <button class="gallery-prev-btn gallery-btn">‹</button>
-              <span class="gallery-counter">1 / ${imgs.length}</span>
-              <button class="gallery-next-btn gallery-btn">›</button>
-            </div>
+          
             <div class="marker-title">${escapeHtml(data.name)}</div>
             <div class="marker-desc">${escapeHtml(data.desc)}</div>
           </div>
